@@ -1,19 +1,20 @@
-import Enemy from './Enemy'
+import Enemy from './game_objects/Enemy'
 
-import { state } from './test'
+import { state } from './state'
+import { consts } from './consts'
 
 export default class EnemyArmy {
-    public army: Array<Enemy> = [];
-    public direction: number = 1;
+    private army: Array<Enemy> = [];
 
     constructor() {
-        let rows = state.level >= 5 ? 5 : 1 + state.level;
+        let rows = state.level >= consts.maxRows ? consts.maxRows : 1 + state.level;
         for (let i = 1; i <= rows; i++) {
-            for (let j = 1; j <= 8; j++) {
-                let alien = new Enemy(52*j, state.armyStepSize * (state.armyHeight) + i * 30, 42, 34, undefined, i);
+            for (let j = 1; j <= consts.rowSize; j++) {
+                let alien = new Enemy(consts.enemy.gapBetween*j, state.armyStepSize * (state.armyHeight) + i * consts.rowGap, consts.enemy.w, consts.enemy.h, i);
                 this.army.push(alien);
             }
         }
+        this.updateSpeed()
     }
 
     public getArmy(): Array<Enemy> {
@@ -24,8 +25,13 @@ export default class EnemyArmy {
         this.army = army;
     }
 
-    public updateSpeed() {
-        console.log(state.timeBeforeSpeedIncreases)
+    public update() {
+        this.updateEach();
+        this.checkBundaries();
+    }
+
+    private updateSpeed() {
+        // это все должно делаться в state вообще. наверное
         window.clearInterval(state.intervalId);
         state.armySpeedIncr -= 15;
         if (state.armySpeedIncr <= 0) state.armySpeedIncr = 0;
@@ -34,43 +40,26 @@ export default class EnemyArmy {
         state.intervalId = window.setInterval(() => this.update(), state.timeBeforeSpeedIncreases);
     }
 
-    public checkBundaries() {
+    private checkBundaries() {
         this.getArmy().forEach(enemy => {
-            if (!enemy.dying) {
-                if (enemy.posX < 9) {
-                    state.alienDirection = 1;
-                    state.armyHeight++;
-                    // setTimeout(() => armySpeed += armySpeedIncr, timeBeforeSpeedIncreases);
-                    this.move();
-                    this.updateSpeed();
-                    return;
-                }
-                if (enemy.posX > 451) 
-                {
-                    state.alienDirection = -1;
-                    state.armyHeight++;
-                    this.move();
-                    this.updateSpeed();
-                    // setTimeout(() => armySpeed += armySpeedIncr, timeBeforeSpeedIncreases);
-                    return;
-                } 
+            if (!enemy.isDying()) {
+                if (enemy.getPosX() < consts.bounds.left) this.changeDirection(1);
+                if (enemy.getPosX() > consts.bounds.right) this.changeDirection(-1);
+                return;
             }
         });
     }
-    public move() {
+
+    private changeDirection(direction: number) {
+        state.alienDirection = direction;
+        state.armyHeight++;
+        this.updateEach();
+        this.updateSpeed();
+    }
+
+    private updateEach() {
         this.getArmy().forEach(enemy => {
             enemy.update();
         });
-    }
-
-
-    public update() {
-        // if (this.moveCountdown > 0) this.moveCountdown--
-        // else {
-        //     this.moveCountdown = defaultCountdown;
-        this.move();
-            this.checkBundaries();
-        // }
-
     }
 }

@@ -14,6 +14,7 @@ export const state: any = {
     level:1,
 
     win:false,
+    running:false,
 
     intervalId: 0
 }
