@@ -36,7 +36,7 @@ export default class GameObject {
     }
 
     public setPosY(y: number) {
-        this.posX = y;
+        this.posY = y;
     }
 
     public incrPosX(delta: number) {
@@ -56,7 +56,7 @@ export default class GameObject {
     }
 
     public setImgSource(uri: string) {
-        this.img.src(uri);
+        this.img.src = uri;
     }
 
     protected drawSprite(ctx: any, object: GameObject = this) {

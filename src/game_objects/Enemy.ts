@@ -63,6 +63,6 @@ export default class Enemy extends GameObject {
     private move() {
         if (!this.dying) this.setImg(this.getImg() === this.img1 ? this.img2 : this.img1);
         this.incrPosX(state.armySpeed * state.alienDirection);
-        this.setPosX(state.armyStepSize * (state.armyHeight) + this.row * consts.rowGap);
+        this.setPosY(state.armyStepSize * (state.armyHeight) + this.row * consts.rowGap);
     }
 }

@@ -7,13 +7,14 @@ export default class EnemyArmy {
     private army: Array<Enemy> = [];
 
     constructor() {
-        let rows = state.level >= consts.maxRows ? consts.maxRows : 1 + state.level;
+        let rows = +state.level >= +consts.maxRows ? +consts.maxRows : 1 + state.level;
         for (let i = 1; i <= rows; i++) {
             for (let j = 1; j <= consts.rowSize; j++) {
                 let alien = new Enemy(consts.enemy.gapBetween*j, state.armyStepSize * (state.armyHeight) + i * consts.rowGap, consts.enemy.w, consts.enemy.h, i);
                 this.army.push(alien);
             }
         }
+        console.log(this.army.length)
         this.updateSpeed()
     }
 

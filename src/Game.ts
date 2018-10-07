@@ -34,6 +34,7 @@ export default class Game {
     }
 
     private gameLoop() {
+        console.log(this.gameField.army.getArmy().length)
         this.gameField.update();
         this.gameField.draw();
         if (state.running) requestAnimationFrame(this.gameLoop.bind(this));

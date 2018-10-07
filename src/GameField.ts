@@ -33,7 +33,7 @@ export default class GameField {
                 if (!enemy.isDying()) {
                     setTimeout(() => {
                         this.player.getBullets().forEach(bullet => {
-                            if (bullet.getPosX() <= enemy.getPosY() + enemy.getHeight()) {
+                            if (bullet.getPosY() <= enemy.getPosY() + enemy.getHeight()) {
                                 if (bullet.getPosX() + bullet.getWidth() >= enemy.getPosX() 
                                     && bullet.getPosX() <= enemy.getPosX() + enemy.getWidth()) {
                                     if (bullet.getPosY() >= enemy.getPosY()) {
