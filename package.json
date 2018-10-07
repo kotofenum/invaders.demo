@@ -1,0 +1,29 @@
+{
+  "name": "sprint",
+  "version": "1.0.0",
+  "description": "Preparing for interview/work",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
+  "author": "kotofenum",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.1.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "style-loader": "^0.23.0",
+    "ts-loader": "^5.2.1",
+    "typescript": "^3.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+  }
+}
